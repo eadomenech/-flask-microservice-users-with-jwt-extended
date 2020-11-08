@@ -13,7 +13,6 @@ class TestCampaignModel(TestBaseModel):
 
     def test_add_user(self, app):
         user = self.add_user()
-        assert user.id == 1
         assert user.username == 'user1'
         assert user.email == 'user1@example.com'
         assert user.active == True
