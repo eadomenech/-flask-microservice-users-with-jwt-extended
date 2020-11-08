@@ -1,5 +1,3 @@
-import json
-
 from application import ma
 from application.api.models import User
 
@@ -7,6 +5,7 @@ from application.api.models import User
 class ResponseBasicSchema(ma.Schema):
     status = ma.Str()
     msg = ma.Str()
+
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

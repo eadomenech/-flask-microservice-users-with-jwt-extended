@@ -1,13 +1,10 @@
 from uuid import UUID
 
-from flask import Blueprint, request, jsonify
-from apifairy import response, body, other_responses
-from sqlalchemy import exc
+from flask import Blueprint
+from apifairy import response, other_responses
 
-from application import db
 from application.api.schemes import (
-    UserSchema, ResponseUserSchema,
-    ResponseListUsersSchema, LoginSchema, ResponseLoginSchema)
+    ResponseUserSchema, ResponseListUsersSchema)
 from application.api.models import User
 
 
@@ -29,9 +26,9 @@ def get_user(user_id):
         'data': {},
     }
     try:
-        val = UUID(user_id, version=4)
+        UUID(user_id, version=4)
     except ValueError:
-        # If it's a value error, then the string 
+        # If it's a value error, then the string
         # is not a valid hex code for a UUID.
         return response_object, 404
     try:

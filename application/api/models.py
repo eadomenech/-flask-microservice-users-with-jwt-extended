@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import uuid
 
 from flask import current_app
@@ -22,12 +22,13 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(
-            password.encode('utf-8'), current_app.config.get('BCRYPT_LOG_ROUNDS')
+            password.encode(
+                'utf-8'), current_app.config.get('BCRYPT_LOG_ROUNDS')
         ).decode()
-    
+
     def __repr__(self):
         return '<User {}>'.format(self.id)
-    
+
     def to_json(self):
         return {
             'id': self.id,
