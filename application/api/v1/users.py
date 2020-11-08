@@ -41,12 +41,7 @@ def get_user(user_id):
         else:
             response_object = {
                 'status': 'success',
-                'data': {
-                    'username': user.username,
-                    'email': user.email,
-                    'password': user.password,
-                    'active': user.active
-                }
+                'data': user.to_json()
             }
             return response_object, 200
     except ValueError:

@@ -20,10 +20,16 @@ class UserWithPasswordSchema(ma.SQLAlchemyAutoSchema):
         fields = ['username', 'email', 'password', 'active']
 
 
+class FullUserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'active']
+
+
 class ResponseUserSchema(ma.Schema):
     status = ma.Str()
     msg = ma.Str()
-    data = ma.Nested(UserSchema)
+    data = ma.Nested(FullUserSchema)
 
 
 class ResponseUserWithTokenSchema(ResponseUserSchema):
@@ -33,7 +39,7 @@ class ResponseUserWithTokenSchema(ResponseUserSchema):
 class ResponseListUsersSchema(ma.Schema):
     status = ma.Str()
     msg = ma.Str()
-    data = ma.List(ma.Nested(UserSchema))
+    data = ma.List(ma.Nested(FullUserSchema))
 
 
 class LoginSchema(ma.Schema):
