@@ -5,9 +5,10 @@
 Config virtualenv:
 
 ```bash
+git clone https://github.com/eadomenech/flask-microservice-users-with-jwt-extended.git src
 python3 -m venv env
 source env/bin/activate
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 ```
 
 ## For development
@@ -16,7 +17,7 @@ pip install -r requirements.txt
 pip install pytest==5.0.1 pytest-cov flake8
 ```
 
-Create postgres database and configure:
+Create local postgres database and configure:
 
 ```bash
 export FLASK_APP=app.py
