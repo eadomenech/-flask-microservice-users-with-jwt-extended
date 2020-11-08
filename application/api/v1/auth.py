@@ -101,7 +101,7 @@ def logout():
 @api.route('/register', methods=['POST'])
 @body(UserWithPasswordSchema)
 @response(
-    ResponseUserWithTokenSchema, status_code=201,
+    ResponseUserSchema, status_code=201,
     description='Successfully registered.')
 @other_responses({400: 'Invalid request.'})
 def register(user):
@@ -129,6 +129,7 @@ def register(user):
             db.session.commit()
             response_object['status'] = 'success'
             response_object['msg'] = 'Successfully registered.'
+            response_object['data'] = new_user.to_json()
             return response_object, 201
         else:
             message = 'Sorry. That user already exists.'

@@ -16,6 +16,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean(), default=True, nullable=False)
+    created = db.Column(db.DateTime(), default=datetime.now(), nullable=False)
 
     def __init__(self, username, email, password):
         self.username = username
@@ -32,5 +33,6 @@ class User(db.Model):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'active': self.active
+            'active': self.active,
+            'created': self.created
         }

@@ -23,7 +23,7 @@ class UserWithPasswordSchema(ma.SQLAlchemyAutoSchema):
 class FullUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'active']
+        fields = ['id', 'username', 'email', 'active', 'created']
 
 
 class ResponseUserSchema(ma.Schema):
