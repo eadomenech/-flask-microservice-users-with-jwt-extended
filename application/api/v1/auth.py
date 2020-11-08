@@ -7,11 +7,12 @@ from flask_jwt_extended import (
 from application import db, bcrypt, jwtManager
 from application.api.schemes import (
     ResponseBasicSchema, ResponseUserSchema, LoginSchema, ResponseLoginSchema,
-    ResponseUserWithTokenSchema, UserWithPasswordSchema)
+    UserWithPasswordSchema)
 from application.api.models import User
 
 
 api = Blueprint('auth', __name__)
+
 
 @jwtManager.user_claims_loader
 def add_claims_to_access_token(identity):
@@ -21,20 +22,24 @@ def add_claims_to_access_token(identity):
         'username': user.username
     }
 
+
 @jwtManager.expired_token_loader
 def my_expired_token_callback(expired_token):
     token_type = expired_token['type']
     return jsonify({
         'status': 'fail',
-        'msg': 'The {} token has expired. Please log in again.'.format(token_type)
+        'msg': 'The {} token has expired. '.format(token_type) +
+        'Please log in again.'
     }), 401
-        
+
+
 @jwtManager.invalid_token_loader
 def my_invalid_token_callback(invalid_token):
     return jsonify({
         'status': 'fail',
         'msg': 'Invalid token. Please log in again.'
     }), 401
+
 
 @api.route('/login', methods=['POST'])
 @body(LoginSchema)
@@ -72,7 +77,7 @@ def login(credentials):
             response_object['msg'] = 'User does not exist.'
         return response_object, 404
     except Exception as e:
-        response_object['msg'] = 'Try again.'
+        response_object['msg'] = e
         return response_object, 500
 
 
