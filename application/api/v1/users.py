@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from flask import Blueprint, request, jsonify
 from apifairy import response, body, other_responses
 from sqlalchemy import exc
@@ -27,18 +29,19 @@ def get_user(user_id):
         'data': {},
     }
     try:
-        user = User.query.filter_by(id=int(user_id)).first()
+        val = UUID(user_id, version=4)
+    except ValueError:
+        # If it's a value error, then the string 
+        # is not a valid hex code for a UUID.
+        return response_object, 404
+    try:
+        user = User.query.filter_by(id=user_id).first()
         if not user:
             return response_object, 404
         else:
             response_object = {
                 'status': 'success',
-                'data': {
-                    'username': user.username,
-                    'email': user.email,
-                    'password': user.password,
-                    'active': user.active
-                }
+                'data': user.to_json()
             }
             return response_object, 200
     except ValueError:

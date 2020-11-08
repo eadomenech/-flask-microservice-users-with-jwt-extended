@@ -1,10 +1,10 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from apifairy import response, body, other_responses
 from sqlalchemy import exc, or_
 from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity)
 
-from application import db, bcrypt
+from application import db, bcrypt, jwtManager
 from application.api.schemes import (
     ResponseBasicSchema, ResponseUserSchema, LoginSchema, ResponseLoginSchema,
     ResponseUserWithTokenSchema, UserWithPasswordSchema)
@@ -13,6 +13,28 @@ from application.api.models import User
 
 api = Blueprint('auth', __name__)
 
+@jwtManager.user_claims_loader
+def add_claims_to_access_token(identity):
+    # fetch the user data
+    user = User.query.filter_by(email=identity).first()
+    return {
+        'username': user.username
+    }
+
+@jwtManager.expired_token_loader
+def my_expired_token_callback(expired_token):
+    token_type = expired_token['type']
+    return jsonify({
+        'status': 'fail',
+        'msg': 'The {} token has expired. Please log in again.'.format(token_type)
+    }), 401
+        
+@jwtManager.invalid_token_loader
+def my_invalid_token_callback(invalid_token):
+    return jsonify({
+        'status': 'fail',
+        'msg': 'Invalid token. Please log in again.'
+    }), 401
 
 @api.route('/login', methods=['POST'])
 @body(LoginSchema)
@@ -79,7 +101,7 @@ def logout():
 @api.route('/register', methods=['POST'])
 @body(UserWithPasswordSchema)
 @response(
-    ResponseUserWithTokenSchema, status_code=201,
+    ResponseUserSchema, status_code=201,
     description='Successfully registered.')
 @other_responses({400: 'Invalid request.'})
 def register(user):
@@ -107,6 +129,7 @@ def register(user):
             db.session.commit()
             response_object['status'] = 'success'
             response_object['msg'] = 'Successfully registered.'
+            response_object['data'] = new_user.to_json()
             return response_object, 201
         else:
             message = 'Sorry. That user already exists.'
