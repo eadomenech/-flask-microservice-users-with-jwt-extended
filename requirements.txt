@@ -1,0 +1,34 @@
+python-dotenv
+
+# Flask
+flask==1.1.2
+
+# For Postgres
+Flask-SQLAlchemy==2.4.4
+
+psycopg2-binary
+
+# APIFairy
+apifairy==0.6.1
+
+# Flask Migrate
+flask-migrate==2.5.3
+
+# Marshmallow
+marshmallow
+
+marshmallow-sqlalchemy
+
+# CORS
+flask-cors==3.0.9
+
+flask-bcrypt==0.7.1
+
+# pyjwt==1.7.1
+
+gunicorn
+
+cryptography
+
+# With asymmetric (public/private) key signing algorithms
+flask-jwt-extended[asymmetric_crypto]
