@@ -4,7 +4,7 @@
 
 Here we have an overview of Users API
 """
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from apifairy import APIFairy
 from flask_marshmallow import Marshmallow
@@ -73,20 +73,5 @@ def create_app(config):
             return render_template(
                 'apifairy/swagger_ui.html', title=apifairy.title,
                 version=apifairy.version)
-        
-        @jwtManager.expired_token_loader
-        def my_expired_token_callback(expired_token):
-            token_type = expired_token['type']
-            return jsonify({
-                'status': 'fail',
-                'msg': 'The {} token has expired. Please log in again.'.format(token_type)
-            }), 401
-        
-        @jwtManager.invalid_token_loader
-        def my_invalid_token_callback(invalid_token):
-            return jsonify({
-                'status': 'fail',
-                'msg': 'Invalid token. Please log in again.'
-            }), 401
 
     return app
