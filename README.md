@@ -16,7 +16,7 @@ pip install -r requirements.txt
 pip install pytest==5.0.1 pytest-cov flake8
 ```
 
-Create postgres database and configure:
+Create local postgres database and configure:
 
 ```bash
 export FLASK_APP=app.py
