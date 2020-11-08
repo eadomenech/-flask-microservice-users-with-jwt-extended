@@ -1,8 +1,5 @@
-import datetime
-
 from sqlalchemy.exc import IntegrityError
 import pytest
-from uuid import UUID
 
 from tests.utils import TestBaseModel
 from application import db
@@ -15,11 +12,11 @@ class TestCampaignModel(TestBaseModel):
         user = self.add_user()
         assert user.username == 'user1'
         assert user.email == 'user1@example.com'
-        assert user.active == True
+        assert user.active
         assert user.password
 
     def test_add_user_duplicate_username(self, app):
-        user = self.add_user()
+        self.add_user()
         duplicate_user = User(
             username='user1', email='user1@example.com',
             password='p@ssw0rd')

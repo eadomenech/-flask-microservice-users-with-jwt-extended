@@ -48,8 +48,8 @@ class TestUsersService(TestBaseModel):
 
         assert 'user1' in data['data'][0]['username']
         assert 'user1@example.com' in data['data'][0]['email']
-        assert data['data'][0]['active'] == True
+        assert data['data'][0]['active']
 
         assert 'user2' in data['data'][1]['username']
         assert 'user2@example.com' in data['data'][1]['email']
-        assert data['data'][1]['active'] == True
+        assert data['data'][1]['active']

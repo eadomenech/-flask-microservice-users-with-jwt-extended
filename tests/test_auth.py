@@ -9,7 +9,7 @@ class TestAuth(TestBaseModel):
     """Tests for the Auth."""
 
     def test_registered_user_login(self, client):
-        user = self.add_user()
+        self.add_user()
         response = client.post(
             '/api/v1/auth/login',
             data=json.dumps({
@@ -38,9 +38,9 @@ class TestAuth(TestBaseModel):
         assert data['token'] == ''
         assert response.content_type == 'application/json'
         assert response.status_code == 404
-    
+
     def test_registered_user_login_wrong_password(self, client):
-        user = self.add_user()
+        self.add_user()
         response = client.post(
             '/api/v1/auth/login',
             data=json.dumps({
@@ -122,9 +122,9 @@ class TestAuth(TestBaseModel):
         )
         data = json.loads(response.data.decode())
         assert data['status'] == 'success'
-        assert data['data'] != None
+        assert data['data']
         assert data['data']['username'] == 'user1'
-        assert data['data']['active'] == True
+        assert data['data']['active']
         assert response.status_code == 200
 
     def test_invalid_status(self, client):
@@ -135,7 +135,7 @@ class TestAuth(TestBaseModel):
         assert data['status'] == 'fail'
         assert data['msg'] == 'Invalid token. Please log in again.'
         assert response.status_code == 401
-    
+
     def test_register_user(self, client):
         """Ensure a new test_add_user can be added to the database."""
         response = client.post(
@@ -237,7 +237,7 @@ class TestAuth(TestBaseModel):
         message = 'Sorry. That user already exists.'
         assert message in data['msg']
         assert 'fail' in data['status']
-    
+
     def test_add_user_duplicate_email(self, client):
         """Ensure error is thrown if the email already exists."""
         client.post(
