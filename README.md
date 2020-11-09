@@ -1,11 +1,11 @@
-# flask-microservice-users-with-jwt-extended
+# flask-users-microservice-with-jwt-extended
 
 ## Requirements
 
 Config virtualenv:
 
 ```bash
-$ git clone https://github.com/eadomenech/flask-microservice-users-with-jwt-extended.git src
+$ git clone https://github.com/eadomenech/flask-users-microservice-with-jwt-extended.git src
 $ python3 -m venv env
 $ source env/bin/activate
 $ pip install -r src/requirements.txt
