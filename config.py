@@ -20,7 +20,6 @@ class BaseConfig(object):
 
     JWT_ALGORITHM='RS256'
     JWT_SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
-    JWT_ALGORITHM = os.environ.get('JWT_ALGORITHM')
     JWT_PRIVATE_KEY = open('private/jwt-key').read()
     JWT_PUBLIC_KEY = open('private/jwt-key.pub').read()
 
