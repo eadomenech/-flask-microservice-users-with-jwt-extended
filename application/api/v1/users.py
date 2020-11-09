@@ -13,7 +13,7 @@ api = Blueprint('users', __name__)
 
 @api.route('/user/<user_id>', methods=['GET'])
 @response(ResponseUserSchema)
-@other_responses({400: 'Invalid request.', 404: 'User not fount'})
+@other_responses({400: 'Invalid request.', 404: 'User not found'})
 def get_user(user_id):
     """
     Get user

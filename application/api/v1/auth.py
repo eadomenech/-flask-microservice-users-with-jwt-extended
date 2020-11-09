@@ -44,7 +44,7 @@ def my_invalid_token_callback(invalid_token):
 @api.route('/login', methods=['POST'])
 @body(LoginSchema)
 @response(ResponseLoginSchema, description='Successfully logged in.')
-@other_responses({400: 'Invalid request.', 404: 'User not fount'})
+@other_responses({400: 'Invalid request.', 404: 'User not found'})
 def login(credentials):
     """
     Login
