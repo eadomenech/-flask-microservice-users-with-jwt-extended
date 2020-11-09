@@ -17,14 +17,22 @@ pip install -r src/requirements.txt
 pip install pytest==5.0.1 pytest-cov flake8
 ```
 
-Create local postgres database and configure:
+Create local postgres database.
+Create a .env file in the src folder and add the following:
 
 ```bash
-export FLASK_APP=app.py
-export DATABASE_DEV_URL=postgres://user:password@host:5432/database-name
-flask db init
-flask db migrate
-flask db upgrade
+FLASK_APP=application:create_app('config.DevelopmentConfig')
+DATABASE_DEV_URL=postgresql://user:password@localhost:5432/database-dev
+DATABASE_TEST_URL=postgresql://user:password@localhost:5432/database-test
+```
+
+Database init:
+
+```bash
+$ cd src/
+$ flask db init
+$ flask db migrate
+$ flask db upgrade
 ```
 
 Run tests:

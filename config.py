@@ -18,17 +18,18 @@ class BaseConfig(object):
     TOKEN_EXPIRATION_DAYS = 30
     TOKEN_EXPIRATION_SECONDS = 0
 
-    JWT_SECRET_KEY = os.environ.get('SECRET_KEY')
+    JWT_ALGORITHM='RS256'
+    JWT_SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-key'
     JWT_ALGORITHM = os.environ.get('JWT_ALGORITHM')
     JWT_PRIVATE_KEY = open('private/jwt-key').read()
     JWT_PUBLIC_KEY = open('private/jwt-key.pub').read()
 
-    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.example.com'
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['eadomenech2020@gmail.com']
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') or 1
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'user@example.com'
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'password'
+    ADMINS = os.environ.get('ADMINS') or ['support@example.com']
 
 
 class DevelopmentConfig(BaseConfig):
